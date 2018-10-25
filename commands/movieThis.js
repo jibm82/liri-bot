@@ -11,10 +11,10 @@ function movieThis(movieName) {
       if (jsonBody.Error) {
         console.log("Error:", jsonBody.Error);
       } else {
-        console.log(jsonBody);
         console.log("Title: ", jsonBody.Title);
         console.log("Year:", jsonBody.Year);
         console.log("Imdb Rating:", jsonBody.imdbRating);
+        console.log("Rotten Tomatoes Rating:", rottenTomatoesRating(jsonBody.Ratings));
         console.log("Country:", jsonBody.Country);
         console.log("Language:", jsonBody.Language);
         console.log("Plot:", jsonBody.Plot);
@@ -24,6 +24,18 @@ function movieThis(movieName) {
       console.log("There was an error retrieving the info.")
     }
   });
+}
+
+function rottenTomatoesRating(ratings) {
+  let rottenTomatoesRating = "N/A";
+
+  ratings.forEach((rating) => {
+    if (rating.Source === "Rotten Tomatoes") {
+      rottenTomatoesRating = rating.Value;
+    }
+  });
+
+  return rottenTomatoesRating;
 }
 
 exports.movieThis = movieThis;
