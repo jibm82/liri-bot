@@ -1,15 +1,20 @@
 require("dotenv").config();
 const fs = require("fs");
 
-let { concertThis } = require("./commands/concertThis");
-let { movieThis } = require("./commands/movieThis");
-let { spotifyThisSong } = require("./commands/spotifyThisSong");
+let { concertThis } = require("./app/concertThis");
+let { logThis } = require("./app/logThis");
+let { movieThis } = require("./app/movieThis");
+let { spotifyThisSong } = require("./app/spotifyThisSong");
 
 let command = process.argv[2];
 let searchParams = undefined;
+let appendCurrentDate = true;
 
 if (command === "do-what-it-says") {
   try {
+    logThis(`Original command: ${command}`, appendCurrentDate);
+    appendCurrentDate = false;
+
     let arguments = fs.readFileSync("random.txt", "utf-8").split(",");
 
     command = arguments[0];
@@ -21,20 +26,28 @@ if (command === "do-what-it-says") {
   searchParams = process.argv.slice(3).join(" ");
 }
 
+logThis(`Command: ${command}`, appendCurrentDate);
+logThis(`Search params: ${searchParams}`);
+
 switch (command) {
   case "concert-this":
-    concertThis(searchParams);
+    concertThis(searchParams, outputResult);
     break;
 
   case "movie-this":
-    movieThis(searchParams);
+    movieThis(searchParams, outputResult);
     break;
 
   case "spotify-this-song":
-    spotifyThisSong(searchParams);
+    spotifyThisSong(searchParams, outputResult);
     break;
 
   default:
-    console.log("I don't know how to do that");
+    outputResult("I don't know how to do that");
     break;
+}
+
+function outputResult(result) {
+  logThis(result);
+  console.log(result);
 }
