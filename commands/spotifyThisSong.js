@@ -6,7 +6,7 @@ let spotify = new Spotify({
   secret: keys.spotify.secret
 });
 
-function spotifyThis(searchParams) {
+function spotifyThisSong(searchParams) {
 
   spotify.search({ type: 'track', query: searchParams }, (err, data) => {
     if (err) {
@@ -23,4 +23,4 @@ function spotifyThis(searchParams) {
   });
 }
 
-exports.spotifyThis = spotifyThis;
+exports.spotifyThisSong = spotifyThisSong;
