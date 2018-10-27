@@ -2,6 +2,10 @@ const request = require("request");
 const keys = require("../keys");
 
 function movieThis(movieName, callback) {
+  if (!movieName) {
+    movieName = "Mr Nobody";
+  }
+
   const ombdUrl = `http://www.omdbapi.com/?apikey=${keys.omdb.apiKey}&t=${movieName}`;
   let movieThisResponse = "";
 

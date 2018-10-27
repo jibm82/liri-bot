@@ -7,6 +7,10 @@ let spotify = new Spotify({
 });
 
 function spotifyThisSong(searchParams, callback) {
+  if (!searchParams) {
+    searchParams = "The sign Ace of Base";
+  }
+
   spotify.search({ type: 'track', query: searchParams }, (err, data) => {
     let spotifyThisSongResult = "";
 
